@@ -2,20 +2,23 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDFランダム画像ビューア</title>
     <style>
         body {
             font-family: sans-serif;
             background: #f4f4f9;
             margin: 0;
-            padding: 20px;
+            padding: 10px;
             text-align: center;
         }
         .container {
-            max-width: 800px;
+            max-width: 100%;
+            width: 100%;
             margin: 0 auto;
             background: white;
-            padding: 20px;
+            padding: 15px;
+            box-sizing: border-box;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
@@ -29,19 +32,19 @@
             cursor: pointer;
             font-weight: bold;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            transition: background 0.2s;
+            width: 100%;
+            max-width: 400px;
         }
         button:hover {
             background: #3367D6;
         }
         #pageInfo {
-            margin: 15px 0;
+            margin: 10px 0;
             color: #555;
             font-size: 16px;
         }
         .image-box {
-            margin-top: 15px;
-            min-height: 400px;
+            margin-top: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -49,48 +52,44 @@
             border: 1px solid #ddd;
             border-radius: 8px;
             overflow: hidden;
+            cursor: pointer; /* 押せるカーソルにする */
         }
         img {
-            max-width: 100%;
-            max-height: 75vh;
+            width: 100%;
+            height: auto;
             display: block;
+            max-height: 85vh;
+            object-fit: contain;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>PDFランダムビューア</h1>
+    <h2>PDFランダムビューア</h2>
     <button onclick="showRandomImage()">🔀 ランダムにページをめくる</button>
-    <p id="pageInfo">ボタンを押してください</p>
+    <p id="pageInfo">画像をタップしても切り替わります</p>
     
-    <div class="image-box">
+    <!-- 画像をタップ（クリック）しても切り替わるように onclick を追加 -->
+    <div class="image-box" onclick="showRandomImage()">
         <img id="viewer" src="" alt="画像">
     </div>
 </div>
 
 <script>
-    // 総ページ数を 240 に設定
     const totalPages = 240; 
 
     function showRandomImage() {
         if (totalPages <= 0) return;
         
-        // 1 から 240 の中からランダムに1つ選ぶ
         const randomPage = Math.floor(Math.random() * totalPages) + 1;
-        
-        // 3桁のゼロ埋め（例: 5 -> "005"、120 -> "120"）にする
         const formattedPage = String(randomPage).padStart(3, '0');
-        
-        // 画像ファイルのパス（page_001.png 〜 page_240.png）
         const imagePath = `page_${formattedPage}.png`;
         
-        // 画像を表示
         document.getElementById('viewer').src = imagePath;
         document.getElementById('pageInfo').innerText = `全 ${totalPages} ページ中 (表示中: ページ ${randomPage})`;
     }
 
-    // ページを開いたときにも自動で1枚表示する
     window.onload = function() {
         showRandomImage();
     };
