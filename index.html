@@ -70,17 +70,31 @@
 </div>
 
 <script>
-    // ページ数（PDFの総ページ数）に合わせて数字を変更してください（例: 全50ページなら 50）
-    const totalPages = 50; 
+    // 総ページ数を 240 に設定
+    const totalPages = 240; 
 
     function showRandomImage() {
         if (totalPages <= 0) return;
         
-        // 1 から totalPages の中からランダムに1つ選ぶ
+        // 1 から 240 の中からランダムに1つ選ぶ
         const randomPage = Math.floor(Math.random() * totalPages) + 1;
         
-        // 3桁のゼロ埋め（例: 1 -> "001"）にする
+        // 3桁のゼロ埋め（例: 5 -> "005"、120 -> "120"）にする
         const formattedPage = String(randomPage).padStart(3, '0');
         
-        // 画像ファイルのパス（ファイル名が page_001.png 形式の場合）
-        const
+        // 画像ファイルのパス（page_001.png 〜 page_240.png）
+        const imagePath = `page_${formattedPage}.png`;
+        
+        // 画像を表示
+        document.getElementById('viewer').src = imagePath;
+        document.getElementById('pageInfo').innerText = `全 ${totalPages} ページ中 (表示中: ページ ${randomPage})`;
+    }
+
+    // ページを開いたときにも自動で1枚表示する
+    window.onload = function() {
+        showRandomImage();
+    };
+</script>
+
+</body>
+</html>
