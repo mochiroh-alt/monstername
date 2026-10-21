@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>怪獣ランダムビューア</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #111; /* 背景を黒にして文字を引き立てる */
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            cursor: pointer;
+            font-family: sans-serif;
+            text-align: center;
+        }
+        .text-box {
+            padding: 20px;
+            max-width: 90%;
+        }
+        /* 一段目（怪獣名など）のスタイル */
+        .name {
+            font-size: clamp(28px, 8vw, 64px);
+            font-weight: bold;
+            margin-bottom: 15px;
+            line-height: 1.3;
+            color: #ffeb3b; /* 黄色っぽくして見やすくする例。#fff でもOK */
+        }
+        /* 二段目（作品名など）のスタイル */
+        .work {
+            font-size: clamp(18px, 5vw, 36px);
+            color: #ccc;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body onclick="showRandomText()">
+
+    <div class="text-box">
+        <div id="nameArea" class="name">読み込み中...</div>
+        <div id="workArea" class="work"></div>
+    </div>
+
+<script>
+    // 怪獣・キャラクターのデータ（「名前」「作品名」のセット）
+    const items = [
+        { name: "ゴジラ", work: "（ゴジラ'1954）" },
+        { name: "ゴジラ", work: "（ゴジラの逆襲）" },
+        { name: "ゴジラ", work: "（キングコング対ゴジラ）" },
+        { name: "ゴジラ", work: "（モスラ対ゴジラ）" },
+        { name: "ゴジラ", work: "（三大怪獣地球最大の決戦）" },
+        { name: "ゴジラ", work: "（怪獣大戦争）" },
+        { name: "ゴジラ", work: "（南海の大決闘）" },
+        { name: "ゴジラ", work: "（ゴジラの息子）" },
+        { name: "ゴジラ", work: "（怪獣総進撃）" },
+        { name: "ゴジラ", work: "（オール怪獣大進撃）" },
+        { name: "ラドン", work: "（空の大怪獣ラドン）" },
+        { name: "ラドン", work: "（三大怪獣地球最大の決戦）" },
+        { name: "ラドン", work: "（怪獣大戦争）" },
+        { name: "ラドン", work: "（怪獣総進撃）" },
+        { name: "ラドン", work: "（ゴジラVSメカゴジラ）" },
+        { name: "ラドン", work: "（ゴジラファイナルウォーズ）" },
+        { name: "ラドン", work: "（KOM）" },
+        { name: "ゴジラ", work: "（ゴジラ対ヘドラ）" },
+        { name: "ゴジラ", work: "（ゴジラ対ガイガン）" },
+        { name: "ゴジラ", work: "（ゴジラ対メガロ）" },
+        { name: "モスラ", work: "（モスラ'1961）" },
+        { name: "モスラ", work: "（モスラ対ゴジラ）" },
+        { name: "モスラ", work: "（南海の大決闘）" },
+        { name: "モスラ", work: "（怪獣総進撃）" },
+        { name: "モスラ", work: "（ゴジラVSモスラ）" },
+        { name: "新モスラ", work: "（モスラ'1996）" },
+        { name: "モスラ", work: "（モスラ2）" },
+        { name: "モスラ", work: "（モスラ3）" },
+        { name: "モスラ", work: "（GMK 大怪獣総攻撃）" },
+        { name: "モスラ", work: "（ゴジラファイナルウォーズ）" },
+        { name: "キングギドラ", work: "（三大怪獣地球最大の決戦）" },
+        { name: "キングギドラ", work: "（怪獣大戦争）" },
+        { name: "キングギドラ", work: "（怪獣総進撃）" },
+        { name: "キングギドラ", work: "（ゴジラ対ガイガン）" },
+        { name: "キングギドラ", work: "（ゴジラVSキングギドラ）" },
+        { name: "魏怒羅", work: "（GMK大怪獣総攻撃）" },
+        { name: "グランドギドラ", work: "（モスラ3）" },
+        { name: "キングギドラ", work: "（KOM）" },
+        { name: "ビオランテ\n花獣形態", work: "（ゴジラVSビオランテ）" },
+        { name: "ビオランテ\n植獣形態", work: "（ゴジラVSビオランテ）" }
+        // ※必要に応じてここにデータを追加できます
+    ];
+
+    function showRandomText() {
+        if (items.length === 0) return;
+        
+        // ランダムに配列から1つ選ぶ
+        const randomIndex = Math.floor(Math.random() * items.length);
+        const selected = items[randomIndex];
+        
+        // 画面に反映（二段に分けて綺麗に表示）
+        document.getElementById('nameArea').innerText = selected.name;
+        document.getElementById('workArea').innerText = selected.work;
+    }
+
+    // ページを開いたときにも自動で1枚表示する
+    window.onload = function() {
+        showRandomText();
+    };
+</script>
+
+</body>
+</html>
