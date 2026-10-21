@@ -3,83 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDFランダム画像ビューア</title>
+    <title>PDFランダムビューア</title>
     <style>
         body {
-            font-family: sans-serif;
-            background: #f4f4f9;
             margin: 0;
-            padding: 10px;
-            text-align: center;
-        }
-        .container {
-            max-width: 100%;
-            width: 100%;
-            margin: 0 auto;
-            background: white;
-            padding: 15px;
-            box-sizing: border-box;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        button {
-            background: #4285F4;
-            color: white;
-            border: none;
-            padding: 14px 28px;
-            border-radius: 8px;
-            font-size: 18px;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            width: 100%;
-            max-width: 400px;
-        }
-        button:hover {
-            background: #3367D6;
-        }
-        #pageInfo {
-            margin: 10px 0;
-            color: #555;
-            font-size: 16px;
-        }
-        .image-box {
-            margin-top: 10px;
+            padding: 0;
+            background: #000; /* 背景を黒にして画像を引き立てる（白でも可） */
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #fafafa;
-            border: 1px solid #ddd;
-            border-radius: 8px;
             overflow: hidden;
-            cursor: pointer; /* 押せるカーソルにする */
+            cursor: pointer;
+        }
+        .image-box {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         img {
-            width: 100%;
+            max-width: 100%;
+            max-height: 100vh;
+            width: auto;
             height: auto;
-            display: block;
-            max-height: 85vh;
             object-fit: contain;
+            display: block;
         }
     </style>
 </head>
-<body>
+<body onclick="showRandomImage()">
 
-<div class="container">
-    <h2>PDFランダムビューア</h2>
-    <button onclick="showRandomImage()">🔀 ランダムにページをめくる</button>
-    <p id="pageInfo">画像をタップしても切り替わります</p>
-    
-    <!-- 画像をタップ（クリック）しても切り替わるように onclick を追加 -->
-    <div class="image-box" onclick="showRandomImage()">
+    <div class="image-box">
         <img id="viewer" src="" alt="画像">
     </div>
-</div>
 
 <script>
     const totalPages = 240; 
 
-    function showRandomImage() {
+    function showRandomImage(event) {
+        // リンクなどがもし将来追加されても誤作動しないための記述
         if (totalPages <= 0) return;
         
         const randomPage = Math.floor(Math.random() * totalPages) + 1;
@@ -87,9 +51,9 @@
         const imagePath = `page_${formattedPage}.png`;
         
         document.getElementById('viewer').src = imagePath;
-        document.getElementById('pageInfo').innerText = `全 ${totalPages} ページ中 (表示中: ページ ${randomPage})`;
     }
 
+    // ページを開いたときにも自動で1枚表示する
     window.onload = function() {
         showRandomImage();
     };
